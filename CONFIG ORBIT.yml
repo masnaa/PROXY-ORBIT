@@ -1,0 +1,95 @@
+dns:
+  enable: true
+  enhanced-mode: redir-host
+  nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+tun:
+  enable: true
+  stack: gvisor
+  dns-hijack:
+    - 198.18.0.2:53
+  auto-route: true
+  auto-detect-interface: true 
+proxy-groups:
+- name: SELECTOR
+  type: select
+  disable-udp: false
+  proxies:
+  - SANGGORO
+  - VMESS ID
+  - DKLONTONG
+  url: http://www.gstatic.com/generate_204
+  interval: '300'
+  tolerance: '150'
+- name: BEST-PING
+  type: url-test
+  disable-udp: false
+  proxies:
+  - SANGGORO
+  - VMESS ID
+  - DKLONTONG
+  url: http://www.gstatic.com/generate_204
+  interval: '300'
+  tolerance: '150'
+- name: LOAD-BALANCE-MULTISSH
+  type: load-balance
+  strategy: round-robin
+  disable-udp: false
+  proxies:
+  - SANGGORO
+  - VMESS ID
+  - DKLONTONG
+  url: http://www.gstatic.com/generate_204
+  interval: '300'
+  
+proxies:  
+- name: SANGGORO
+  type: vmess
+  server: sanggoro-bogor2.bypass.id
+  port: 80
+  uuid: db2d5fc0-6807-11ed-8d7c-1577c1651679
+  alterId: 0
+  cipher: auto
+  udp: true
+  skip-cert-verify: true
+  tls: false
+  network: ws
+  ws-opts:
+   path: /kuota-habis/
+   headers:
+    Host: myorbit.id
+    
+- name: VMESS ID
+  type: vmess
+  server: id-infy1.feristore.tech
+  port: 80
+  uuid: bc2ce4b8-feba-47eb-a093-50068749f56e
+  alterId: 0
+  cipher: auto
+  udp: true
+  skip-cert-verify: true
+  tls: false
+  network: ws
+  ws-opts:
+   path: /kuota-habis/
+   headers:
+    Host: myorbit.id
+    
+- name: DKLONTONG
+  type: vmess
+  server: iddk.dklongtong.xyz
+  port: 80
+  uuid: 3a74a8ed-940b-4fa8-9dd8-a5f20aefb47c
+  alterId: 0
+  cipher: auto
+  udp: true
+  skip-cert-verify: true
+  tls: false
+  network: ws
+  ws-opts:
+   path: /kuota-habis/
+   headers:
+    Host: myorbit.id
+rules:
+- MATCH,GLOBAL
